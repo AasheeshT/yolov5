@@ -15,6 +15,7 @@ import cv2
 import numpy as np
 import torch
 import torch.backends.cudnn as cudnn
+import pandas as pd
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
@@ -58,7 +59,7 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
         half=False,  # use FP16 half-precision inference
         dnn=False,  # use OpenCV DNN for ONNX inference
         ):
-    my_results = []
+    to_submit = pd.DataFrame(columns=["filename", "prediction"])
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
     webcam = source.isnumeric() or source.endswith('.txt') or source.lower().startswith(
@@ -213,9 +214,9 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
                 #print("Aasheesh ", p.name, s)
                 temp_res = {}
-                temp_res['image']=p.name
+                temp_res['filename']=p.name
                 temp_res['detection']=s
-                my_results.append(temp_res)
+                to_submit.append(temp_res, ignore_index=True)
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
                     if save_txt:  # Write to file
@@ -267,10 +268,7 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
         print(f"Results saved to {colorstr('bold', save_dir)}{s}")
     if update:
         strip_optimizer(weights)  # update model (to fix SourceChangeWarning)
-    print(my_results)
-    with open("submission.txt", "w") as txt_file:
-        for line in my_results:
-            txt_file.write(" ".join(line) + "\n")
+    to_submit.to_csv("my_submission.csv", index=False)
 
 
 def parse_opt():
