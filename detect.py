@@ -231,7 +231,11 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
                         annotator.box_label(xyxy, label, color=colors(c, True))
                         if save_crop:
                             save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
-
+            else:
+                temp_res = {}
+                temp_res['filename'] = p.name
+                temp_res['detection'] = "No_detection"
+                to_submit = to_submit.append(temp_res, ignore_index=True)
             # Print time (inference-only)
             print(f'{s}Done. ({t3 - t2:.3f}s)')
 
