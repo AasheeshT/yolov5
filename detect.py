@@ -59,7 +59,7 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
         half=False,  # use FP16 half-precision inference
         dnn=False,  # use OpenCV DNN for ONNX inference
         ):
-    to_submit = pd.DataFrame(columns=["filename", "prediction"])
+    to_submit = pd.DataFrame(columns=["filename", "detection"])
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
     webcam = source.isnumeric() or source.endswith('.txt') or source.lower().startswith(
