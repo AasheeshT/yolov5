@@ -58,6 +58,7 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
         half=False,  # use FP16 half-precision inference
         dnn=False,  # use OpenCV DNN for ONNX inference
         ):
+    my_results = []
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
     webcam = source.isnumeric() or source.endswith('.txt') or source.lower().startswith(
@@ -210,8 +211,11 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
                 for c in det[:, -1].unique():
                     n = (det[:, -1] == c).sum()  # detections per class
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
-                print("Aasheesh ", p.name)
-                print("Aasheesh ", img)
+                #print("Aasheesh ", p.name, s)
+                temp_res = {}
+                temp_res['image']=p.name
+                temp_res['detection']=s
+                my_results.append(temp_res)
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
                     if save_txt:  # Write to file
@@ -263,6 +267,9 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
         print(f"Results saved to {colorstr('bold', save_dir)}{s}")
     if update:
         strip_optimizer(weights)  # update model (to fix SourceChangeWarning)
+    with open("submission.txt", "w") as txt_file:
+        for line in my_results:
+            txt_file.write(" ".join(line) + "\n")
 
 
 def parse_opt():
