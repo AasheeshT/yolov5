@@ -267,6 +267,7 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
         print(f"Results saved to {colorstr('bold', save_dir)}{s}")
     if update:
         strip_optimizer(weights)  # update model (to fix SourceChangeWarning)
+    print(my_results)
     with open("submission.txt", "w") as txt_file:
         for line in my_results:
             txt_file.write(" ".join(line) + "\n")
