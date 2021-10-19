@@ -216,7 +216,7 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
                 temp_res = {}
                 temp_res['filename']=p.name
                 temp_res['detection']=s
-                to_submit.append(temp_res, ignore_index=True)
+                to_submit=to_submit.append(temp_res, ignore_index=True)
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
                     if save_txt:  # Write to file
