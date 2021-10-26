@@ -23,13 +23,13 @@ class Albumentations:
             check_version(A.__version__, '1.0.3')  # version requirement
 
             self.transform = A.Compose([
-                A.JpegCompression(p=0.4),
-                A.LongestMaxSize(),
-                A.MotionBlur(),
-                A.RandomBrightness(),
-                A.SmallestMaxSize(),
-                A.VerticalFlip(p=0.2),
-                A.Transpose(),
+                A.HorizontalFlip(p=0.2),
+                A.RandomBrightnessContrast(p=0.2),
+                A.Blur(p=0.7),
+                A.CLAHE(p=0.2),
+                A.Flip(),
+                A.GaussNoise(),
+                A.ToGray(p=0.2),
                 A.ImageCompression(quality_lower=75, p=0.0)],
                 bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels']))
 
