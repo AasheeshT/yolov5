@@ -29,7 +29,6 @@ class Albumentations:
                 A.CLAHE(p=0.2),
                 A.Flip(),
                 A.GaussNoise(),
-                A.GridDistortion(),
                 A.ToGray(p=0.2),
                 A.JpegCompression(p=0.4),
                 A.LongestMaxSize(),
