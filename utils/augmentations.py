@@ -30,6 +30,12 @@ class Albumentations:
                 A.Flip(),
                 A.GaussNoise(),
                 A.ToGray(p=0.2),
+                A.LongestMaxSize(),
+                A.MotionBlur(),
+                A.RandomBrightness(),
+                A.SmallestMaxSize(),
+                A.VerticalFlip(p=0.2),
+                A.Transpose(),
                 A.ImageCompression(quality_lower=75, p=0.0)],
                 bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels']))
 
